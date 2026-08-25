@@ -33,6 +33,16 @@ async function getCollection() {
     return client.db(process.env.MONGODB_DB || "recuperacion_cuenta").collection("solicitudes");
 }
 
+app.get("/api/status", async (request, response) => {
+    try {
+        await getCollection();
+        response.json({ connected: true });
+    } catch (error) {
+        console.error(error.message);
+        response.status(503).json({ connected: false });
+    }
+});
+
 app.post("/api/records", async (request, response) => {
     const { username, usernameConfirmation } = request.body;
 

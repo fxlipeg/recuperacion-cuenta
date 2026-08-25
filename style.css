@@ -96,6 +96,23 @@ h2 {
     text-align: center;
 }
 
+.connection-status {
+    margin-bottom: 18px;
+    color: #697586;
+    font-size: 13px;
+    text-align: center;
+}
+
+.connection-status.connected {
+    color: #147d68;
+    font-weight: bold;
+}
+
+.connection-status.disconnected {
+    color: #b42318;
+    font-weight: bold;
+}
+
 label {
     display: block;
 

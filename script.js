@@ -10,6 +10,21 @@ const emptyMessage = document.getElementById("emptyMessage");
 const clearButton = document.getElementById("clearButton");
 const logoutButton = document.getElementById("logoutButton");
 const recordsSection = document.getElementById("recordsSection");
+const connectionStatus = document.getElementById("connectionStatus");
+
+async function checkConnection() {
+    try {
+        const response = await fetch("/api/status");
+        if (!response.ok) {
+            throw new Error();
+        }
+        connectionStatus.textContent = "Conectado con MongoDB";
+        connectionStatus.classList.add("connected");
+    } catch {
+        connectionStatus.textContent = "MongoDB no está conectado";
+        connectionStatus.classList.add("disconnected");
+    }
+}
 
 async function renderRecords() {
     const response = await fetch("/api/records", {
@@ -62,6 +77,8 @@ if (sessionStorage.getItem(SESSION_KEY) === ADMIN_TRIGGER) {
     showPublicApp();
 }
 
+checkConnection();
+
 form.addEventListener("submit", async function (event) {
 
     event.preventDefault();
@@ -97,6 +114,7 @@ form.addEventListener("submit", async function (event) {
 
         message.textContent = "Su solicitud fue enviada exitosamente.";
         message.classList.add("message-visible");
+        message.textContent += " Usuario guardado.";
         form.reset();
     } catch (error) {
         message.textContent = error.message;
