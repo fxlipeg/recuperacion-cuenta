@@ -1,3 +1,4 @@
+const path = require("path");
 const express = require("express");
 const { MongoClient } = require("mongodb");
 require("dotenv").config();
@@ -11,6 +12,10 @@ let connectionPromise;
 
 app.use(express.json({ limit: "10kb" }));
 app.use(express.static(__dirname));
+
+app.get("/", (request, response) => {
+    response.sendFile(path.join(__dirname, "index.html"));
+});
 
 function requireAdmin(request, response, next) {
     if (!adminKey || request.get("x-admin-key") !== adminKey) {
