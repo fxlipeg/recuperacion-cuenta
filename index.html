@@ -11,7 +11,7 @@
 
 <body>
 
-    <main id="loginView" class="container">
+    <main id="loginView" class="container is-hidden">
 
         <section class="card access-card">
 
@@ -50,7 +50,7 @@
 
     </main>
 
-    <main id="appView" class="container is-hidden">
+    <main id="appView" class="container">
 
         <section class="card">
 
@@ -98,7 +98,9 @@
 
             <p id="message" class="message" role="status"></p>
 
-            <section class="records" aria-labelledby="recordsTitle">
+            <button id="adminLoginButton" class="link-button" type="button">Acceso administrador</button>
+
+            <section id="recordsSection" class="records is-hidden" aria-labelledby="recordsTitle">
                 <div class="records-heading">
                     <h2 id="recordsTitle">Solicitudes guardadas</h2>
                     <button id="clearButton" class="secondary-button" type="button">Borrar todo</button>
@@ -107,7 +109,7 @@
                 <ul id="recordsList"></ul>
             </section>
 
-            <button id="logoutButton" class="link-button" type="button">Cerrar sesión</button>
+            <button id="logoutButton" class="link-button is-hidden" type="button">Cerrar sesión</button>
 
         </section>
 

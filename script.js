@@ -15,6 +15,8 @@ const recordsList = document.getElementById("recordsList");
 const emptyMessage = document.getElementById("emptyMessage");
 const clearButton = document.getElementById("clearButton");
 const logoutButton = document.getElementById("logoutButton");
+const recordsSection = document.getElementById("recordsSection");
+const adminLoginButton = document.getElementById("adminLoginButton");
 
 function getRecords() {
     try {
@@ -44,16 +46,35 @@ function renderRecords() {
     });
 }
 
-function showApp() {
+function showPublicApp() {
     loginView.classList.add("is-hidden");
     appView.classList.remove("is-hidden");
+    recordsSection.classList.add("is-hidden");
+    logoutButton.classList.add("is-hidden");
+    adminLoginButton.classList.remove("is-hidden");
+    activeUser.textContent = "";
+}
+
+function showAdminApp() {
+    loginView.classList.add("is-hidden");
+    appView.classList.remove("is-hidden");
+    recordsSection.classList.remove("is-hidden");
+    logoutButton.classList.remove("is-hidden");
+    adminLoginButton.classList.add("is-hidden");
     activeUser.textContent = `Usuario: ${sessionStorage.getItem(SESSION_KEY) || DEMO_USERNAME}`;
     renderRecords();
 }
 
 if (sessionStorage.getItem(SESSION_KEY)) {
-    showApp();
+    showAdminApp();
+} else {
+    showPublicApp();
 }
+
+adminLoginButton.addEventListener("click", function () {
+    appView.classList.add("is-hidden");
+    loginView.classList.remove("is-hidden");
+});
 
 loginForm.addEventListener("submit", function (event) {
     event.preventDefault();
@@ -74,7 +95,7 @@ loginForm.addEventListener("submit", function (event) {
     sessionStorage.setItem(SESSION_KEY, loginUsername);
     loginForm.reset();
     loginMessage.textContent = "";
-    showApp();
+    showAdminApp();
 });
 
 form.addEventListener("submit", function (event) {
@@ -117,7 +138,6 @@ clearButton.addEventListener("click", function () {
 logoutButton.addEventListener("click", function () {
     sessionStorage.removeItem(SESSION_KEY);
     appView.classList.add("is-hidden");
-    loginView.classList.remove("is-hidden");
+    showPublicApp();
     loginMessage.textContent = "";
-    activeUser.textContent = "";
 });
