@@ -6,10 +6,11 @@ require("dotenv").config();
 const app = express();
 const port = process.env.PORT || 3000;
 const adminKey = process.env.ADMIN_KEY && process.env.ADMIN_KEY.trim();
-const mongoUri = (process.env.MONGODB_URI || process.env.MONGO_URI) &&
-    (process.env.MONGODB_URI || process.env.MONGO_URI).trim();
+const configuredMongoUri = (process.env.MONGODB_URI || process.env.MONGO_URI || "").trim();
+const mongoUri = configuredMongoUri.replace(/^(["'])(.*)\1$/, "$2");
+const mongoUriIsValid = /^mongodb(?:\+srv)?:\/\//.test(mongoUri);
 const mongoDbName = process.env.MONGODB_DB && process.env.MONGODB_DB.trim() || "recuperacion_cuenta";
-const client = mongoUri ? new MongoClient(mongoUri, {
+const client = mongoUriIsValid ? new MongoClient(mongoUri, {
     serverSelectionTimeoutMS: 5000,
     retryWrites: true
 }) : null;
@@ -31,8 +32,10 @@ function requireAdmin(request, response, next) {
 }
 
 async function getCollection() {
-    if (!client || !mongoUri) {
-        throw new Error("MONGODB_URI no está configurada.");
+    if (!client) {
+        throw new Error(configuredMongoUri
+            ? "MONGODB_URI no tiene un formato válido. Usa mongodb:// o mongodb+srv://."
+            : "MONGODB_URI no está configurada.");
     }
 
     try {
