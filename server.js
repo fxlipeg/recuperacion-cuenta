@@ -5,9 +5,13 @@ require("dotenv").config();
 
 const app = express();
 const port = process.env.PORT || 3000;
-const adminKey = process.env.ADMIN_KEY;
-const mongoUri = process.env.MONGODB_URI;
-const client = mongoUri ? new MongoClient(mongoUri) : null;
+const adminKey = process.env.ADMIN_KEY && process.env.ADMIN_KEY.trim();
+const mongoUri = process.env.MONGODB_URI && process.env.MONGODB_URI.trim();
+const mongoDbName = process.env.MONGODB_DB && process.env.MONGODB_DB.trim() || "recuperacion_cuenta";
+const client = mongoUri ? new MongoClient(mongoUri, {
+    serverSelectionTimeoutMS: 5000,
+    retryWrites: true
+}) : null;
 let connectionPromise;
 
 app.use(express.json({ limit: "10kb" }));
@@ -26,16 +30,21 @@ function requireAdmin(request, response, next) {
 }
 
 async function getCollection() {
-    if (!client) {
+    if (!client || !mongoUri) {
         throw new Error("MONGODB_URI no está configurada.");
     }
 
-    if (!connectionPromise) {
-        connectionPromise = client.connect();
-    }
+    try {
+        if (!connectionPromise) {
+            connectionPromise = client.connect();
+        }
 
-    await connectionPromise;
-    return client.db(process.env.MONGODB_DB || "recuperacion_cuenta").collection("solicitudes");
+        await connectionPromise;
+        return client.db(mongoDbName).collection("solicitudes");
+    } catch (error) {
+        connectionPromise = null;
+        throw error;
+    }
 }
 
 app.get("/api/status", async (request, response) => {
@@ -43,8 +52,8 @@ app.get("/api/status", async (request, response) => {
         await getCollection();
         response.json({ connected: true });
     } catch (error) {
-        console.error(error.message);
-        response.status(503).json({ connected: false });
+        console.error("MongoDB status error:", error.message);
+        response.status(503).json({ connected: false, error: error.message });
     }
 });
 
