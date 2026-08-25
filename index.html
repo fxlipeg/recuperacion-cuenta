@@ -11,7 +11,37 @@
 
 <body>
 
-    <main class="container">
+    <main id="loginView" class="container">
+
+        <section class="card access-card">
+
+            <div class="logo" aria-hidden="true">夜</div>
+
+            <h1>Acceso protegido</h1>
+
+            <p class="description">
+                Introduce la contraseña para abrir el formulario de recuperación.
+            </p>
+
+            <form id="loginForm">
+                <label for="password">Contraseña</label>
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Introduce la contraseña"
+                    autocomplete="current-password"
+                    required
+                >
+                <button type="submit">Entrar</button>
+            </form>
+
+            <p id="loginMessage" class="message" role="alert"></p>
+
+        </section>
+
+    </main>
+
+    <main id="appView" class="container is-hidden">
 
         <section class="card">
 
@@ -20,7 +50,7 @@
             <h1>Recuperación de cuenta</h1>
 
             <p class="description">
-                Ingresa tu usuario para comenzar el proceso de recuperación.
+                Ingresa tu usuario para comenzar el proceso de recuperación. Las solicitudes quedan guardadas en este dispositivo.
             </p>
 
             <form id="recoveryForm">
@@ -43,7 +73,18 @@
 
             </form>
 
-            <p id="message"></p>
+            <p id="message" class="message" role="status"></p>
+
+            <section class="records" aria-labelledby="recordsTitle">
+                <div class="records-heading">
+                    <h2 id="recordsTitle">Solicitudes guardadas</h2>
+                    <button id="clearButton" class="secondary-button" type="button">Borrar todo</button>
+                </div>
+                <p id="emptyMessage" class="empty-message">Todavía no hay solicitudes.</p>
+                <ul id="recordsList"></ul>
+            </section>
+
+            <button id="logoutButton" class="link-button" type="button">Cerrar sesión</button>
 
         </section>
 

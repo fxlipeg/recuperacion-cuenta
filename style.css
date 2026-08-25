@@ -11,13 +11,13 @@ body {
     justify-content: center;
     align-items: center;
 
-    font-family: Arial, sans-serif;
+    padding: 20px 0;
 
-    background:
-        radial-gradient(circle at top, #25204a, transparent 45%),
-        #090912;
+    font-family: "Trebuchet MS", Arial, sans-serif;
 
-    color: white;
+    background: #ffffff;
+
+    color: #172033;
 }
 
 .container {
@@ -30,17 +30,19 @@ body {
     max-width: 420px;
 
     margin: auto;
-    padding: 35px;
+    padding: clamp(24px, 6vw, 35px);
 
-    border-radius: 24px;
+    border-radius: 16px;
 
-    background: rgba(255, 255, 255, 0.07);
+    background: #ffffff;
 
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 1px solid #d9dee8;
 
-    backdrop-filter: blur(15px);
+    box-shadow: 0 12px 30px rgba(31, 45, 61, 0.1);
+}
 
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+.is-hidden {
+    display: none;
 }
 
 .logo {
@@ -55,11 +57,8 @@ body {
 
     border-radius: 50%;
 
-    background: linear-gradient(
-        135deg,
-        #6c5ce7,
-        #9b59b6
-    );
+    background: #e5f3ef;
+    color: #147d68;
 
     font-size: 30px;
     font-weight: bold;
@@ -73,10 +72,14 @@ h1 {
     margin-bottom: 10px;
 }
 
+h2 {
+    font-size: 18px;
+}
+
 .description {
     text-align: center;
 
-    color: #aaa;
+    color: #5f6b7a;
 
     font-size: 14px;
 
@@ -90,7 +93,7 @@ label {
 
     margin-bottom: 8px;
 
-    color: #ddd;
+    color: #344054;
 
     font-size: 14px;
 }
@@ -102,13 +105,13 @@ input {
 
     margin-bottom: 20px;
 
-    border-radius: 10px;
+    border-radius: 8px;
 
-    border: 1px solid rgba(255,255,255,0.15);
+    border: 1px solid #c7ced9;
 
-    background: rgba(0,0,0,0.3);
+    background: #ffffff;
 
-    color: white;
+    color: #172033;
 
     outline: none;
 
@@ -116,7 +119,8 @@ input {
 }
 
 input:focus {
-    border-color: #8e44ad;
+    border-color: #147d68;
+    box-shadow: 0 0 0 3px rgba(20, 125, 104, 0.15);
 }
 
 button {
@@ -126,13 +130,9 @@ button {
 
     border: none;
 
-    border-radius: 10px;
+    border-radius: 8px;
 
-    background: linear-gradient(
-        135deg,
-        #6c5ce7,
-        #8e44ad
-    );
+    background: #147d68;
 
     color: white;
 
@@ -151,12 +151,99 @@ button:hover {
     opacity: 0.9;
 }
 
-#message {
+.message {
     text-align: center;
 
     margin-top: 20px;
 
     font-size: 14px;
 
-    color: #aaa;
+    color: #147d68;
+}
+
+.records {
+    margin-top: 30px;
+    padding-top: 22px;
+    border-top: 1px solid #e3e7ed;
+}
+
+.records-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.secondary-button,
+.link-button {
+    width: auto;
+    padding: 8px 10px;
+    background: transparent;
+    color: #147d68;
+    font-size: 13px;
+}
+
+.secondary-button:hover,
+.link-button:hover {
+    transform: none;
+    opacity: 0.75;
+}
+
+.secondary-button:disabled {
+    color: #a4acb8;
+    cursor: not-allowed;
+}
+
+.empty-message {
+    color: #697586;
+    font-size: 14px;
+}
+
+#recordsList {
+    display: grid;
+    gap: 8px;
+    padding: 0;
+    list-style: none;
+}
+
+#recordsList li {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 11px 12px;
+    border: 1px solid #e3e7ed;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+#recordsList span {
+    color: #697586;
+    font-size: 12px;
+    text-align: right;
+}
+
+.link-button {
+    display: block;
+    margin: 18px auto 0;
+}
+
+@media (max-width: 480px) {
+    body {
+        align-items: flex-start;
+    }
+
+    .container {
+        padding: 12px;
+    }
+
+    #recordsList li {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    #recordsList span {
+        text-align: left;
+    }
 }

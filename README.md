@@ -1,2 +1,10 @@
 # recuperacion-cuenta
- Página de recuperación de cuenta
+
+Página de recuperación de cuenta con acceso protegido y registro local de solicitudes.
+
+## Uso
+
+- Contraseña inicial: `cambia-esta-clave`.
+- Para cambiarla, edita `ACCESS_PASSWORD` al comienzo de `script.js`.
+- Las solicitudes se guardan en `localStorage` y solo se pueden consultar desde el mismo navegador y dispositivo.
+- La contraseña del archivo es una protección básica para una página estática; para proteger datos sensibles se necesita un servidor con autenticación real.
