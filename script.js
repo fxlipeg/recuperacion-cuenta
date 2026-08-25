@@ -1,8 +1,8 @@
-const ACCESS_PASSWORD = "cambia-esta-clave";
+const ACCESS_PASSWORD = "Felipe1";
 const STORAGE_KEY = "solicitudes-recuperacion";
 const SESSION_KEY = "sesion-recuperacion";
 const DEMO_USERNAME = "Fxlipe";
-const DEMO_PASSWORD = "Fxlipe123";
+const DEMO_PASSWORD = "Felipe1";
 
 const loginView = document.getElementById("loginView");
 const appView = document.getElementById("appView");
@@ -36,9 +36,10 @@ function renderRecords() {
             dateStyle: "medium",
             timeStyle: "short"
         });
-        item.innerHTML = `<strong></strong><span></span>`;
-        item.querySelector("strong").textContent = record.username;
-        item.querySelector("span").textContent = date;
+        item.innerHTML = `<strong></strong><span class="repeated-user"></span><span class="record-date"></span>`;
+        item.querySelector("strong").textContent = `Usuario: ${record.username}`;
+        item.querySelector(".repeated-user").textContent = `Usuario repetido: ${record.usernameConfirmation || "No indicado"}`;
+        item.querySelector(".record-date").textContent = date;
         recordsList.appendChild(item);
     });
 }
@@ -91,7 +92,11 @@ form.addEventListener("submit", function (event) {
     }
 
     const records = getRecords();
-    records.unshift({ username, createdAt: new Date().toISOString() });
+    records.unshift({
+        username,
+        usernameConfirmation,
+        createdAt: new Date().toISOString()
+    });
     localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
 
     message.textContent = "Tu solicitud está en proceso.";
