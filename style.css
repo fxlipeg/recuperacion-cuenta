@@ -160,6 +160,7 @@ button:hover {
 }
 
 .message {
+    min-height: 20px;
     text-align: center;
 
     margin-top: 20px;
@@ -167,6 +168,14 @@ button:hover {
     font-size: 14px;
 
     color: #147d68;
+}
+
+.message-visible {
+    padding: 12px;
+    border: 1px solid #b7dfd4;
+    border-radius: 8px;
+    background: #effaf7;
+    font-weight: bold;
 }
 
 .records {

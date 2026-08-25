@@ -92,9 +92,9 @@ form.addEventListener("submit", function (event) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
 
     message.textContent = "Su solicitud fue enviada exitosamente.";
+    message.classList.add("message-visible");
 
     form.reset();
-    renderRecords();
 
 });
 
@@ -103,6 +103,7 @@ clearButton.addEventListener("click", function () {
         localStorage.removeItem(STORAGE_KEY);
         renderRecords();
         message.textContent = "Se borraron las solicitudes guardadas.";
+        message.classList.add("message-visible");
     }
 });
 
