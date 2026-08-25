@@ -217,6 +217,7 @@ button:hover {
 
 #recordsList li {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     gap: 12px;
@@ -235,6 +236,16 @@ button:hover {
 #recordsList .repeated-user {
     color: #344054;
     font-size: 14px;
+}
+
+#recordsList .record-user::before {
+    content: "Usuario: ";
+    color: #697586;
+}
+
+#recordsList .repeated-user::before {
+    content: "Usuario repetido: ";
+    color: #697586;
 }
 
 .link-button {

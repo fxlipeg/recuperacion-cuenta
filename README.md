@@ -4,7 +4,7 @@ Página de recuperación de cuenta con acceso protegido y registro local de soli
 
 ## Uso
 
-- Acceso de demostración: usuario `Fxlipe`, contraseña `Felipe1`.
+- Acceso de demostración: usuario `Fxlipe1`, contraseña `Fxlipe1`.
 - Puedes cambiar `ACCESS_PASSWORD` al comienzo de `script.js`.
 - Las solicitudes se guardan en `localStorage` y solo se pueden consultar desde el mismo navegador y dispositivo.
 - La contraseña del archivo es una protección básica para una página estática; para proteger datos sensibles se necesita un servidor con autenticación real.

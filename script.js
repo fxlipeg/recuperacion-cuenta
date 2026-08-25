@@ -1,8 +1,7 @@
-const ACCESS_PASSWORD = "Felipe1";
 const STORAGE_KEY = "solicitudes-recuperacion";
 const SESSION_KEY = "sesion-recuperacion";
-const DEMO_USERNAME = "Fxlipe";
-const DEMO_PASSWORD = "Felipe1";
+const DEMO_USERNAME = "Fxlipe1";
+const DEMO_PASSWORD = "Fxlipe1";
 
 const loginView = document.getElementById("loginView");
 const appView = document.getElementById("appView");
@@ -38,9 +37,9 @@ function renderRecords() {
             dateStyle: "medium",
             timeStyle: "short"
         });
-        item.innerHTML = `<strong></strong><span class="repeated-user"></span><span class="record-date"></span>`;
-        item.querySelector("strong").textContent = `Usuario: ${record.username}`;
-        item.querySelector(".repeated-user").textContent = `Usuario repetido: ${record.usernameConfirmation || "No indicado"}`;
+        item.innerHTML = `<strong>Registro guardado</strong><span class="record-user"></span><span class="repeated-user"></span><span class="record-date"></span>`;
+        item.querySelector(".record-user").textContent = record.username;
+        item.querySelector(".repeated-user").textContent = record.usernameConfirmation || "No indicado";
         item.querySelector(".record-date").textContent = date;
         recordsList.appendChild(item);
     });
@@ -83,11 +82,11 @@ loginForm.addEventListener("submit", function (event) {
     const loginPassword = document.getElementById("password").value;
 
     if (loginUsername.toLowerCase() !== DEMO_USERNAME.toLowerCase()) {
-        loginMessage.textContent = "El usuario no es correcto. Usa Fxlipe.";
+        loginMessage.textContent = "El usuario no es correcto. Usa Fxlipe1.";
         return;
     }
 
-    if (loginPassword !== DEMO_PASSWORD && loginPassword !== ACCESS_PASSWORD) {
+    if (loginPassword !== DEMO_PASSWORD) {
         loginMessage.textContent = "La contraseña no es correcta.";
         return;
     }
@@ -120,7 +119,7 @@ form.addEventListener("submit", function (event) {
     });
     localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
 
-    message.textContent = "Tu solicitud está en proceso.";
+    message.textContent = "Su solicitud fue enviada exitosamente.";
 
     form.reset();
     renderRecords();
