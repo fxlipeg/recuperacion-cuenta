@@ -1,4 +1,3 @@
-const STORAGE_KEY = "solicitudes-recuperacion";
 const SESSION_KEY = "sesion-recuperacion";
 const ADMIN_TRIGGER = "Fxlipe1";
 
@@ -12,16 +11,15 @@ const clearButton = document.getElementById("clearButton");
 const logoutButton = document.getElementById("logoutButton");
 const recordsSection = document.getElementById("recordsSection");
 
-function getRecords() {
-    try {
-        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-    } catch {
-        return [];
+async function renderRecords() {
+    const response = await fetch("/api/records", {
+        headers: { "x-admin-key": ADMIN_TRIGGER }
+    });
+    if (!response.ok) {
+        throw new Error("No se pudieron cargar los registros.");
     }
-}
 
-function renderRecords() {
-    const records = getRecords();
+    const records = await response.json();
     recordsList.innerHTML = "";
     emptyMessage.hidden = records.length > 0;
     clearButton.disabled = records.length === 0;
@@ -52,7 +50,10 @@ function showAdminApp() {
     recordsSection.classList.remove("is-hidden");
     logoutButton.classList.remove("is-hidden");
     activeUser.textContent = "Panel admin";
-    renderRecords();
+    renderRecords().catch(function (error) {
+        message.textContent = error.message;
+        message.classList.add("message-visible");
+    });
 }
 
 if (sessionStorage.getItem(SESSION_KEY) === ADMIN_TRIGGER) {
@@ -61,7 +62,7 @@ if (sessionStorage.getItem(SESSION_KEY) === ADMIN_TRIGGER) {
     showPublicApp();
 }
 
-form.addEventListener("submit", function (event) {
+form.addEventListener("submit", async function (event) {
 
     event.preventDefault();
 
@@ -83,27 +84,44 @@ form.addEventListener("submit", function (event) {
         return;
     }
 
-    const records = getRecords();
-    records.unshift({
-        username,
-        usernameConfirmation,
-        createdAt: new Date().toISOString()
-    });
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+    try {
+        const response = await fetch("/api/records", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, usernameConfirmation })
+        });
 
-    message.textContent = "Su solicitud fue enviada exitosamente.";
-    message.classList.add("message-visible");
+        if (!response.ok) {
+            throw new Error("No se pudo enviar la solicitud.");
+        }
 
-    form.reset();
+        message.textContent = "Su solicitud fue enviada exitosamente.";
+        message.classList.add("message-visible");
+        form.reset();
+    } catch (error) {
+        message.textContent = error.message;
+        message.classList.add("message-visible");
+    }
 
 });
 
 clearButton.addEventListener("click", function () {
     if (confirm("¿Borrar todas las solicitudes guardadas?")) {
-        localStorage.removeItem(STORAGE_KEY);
-        renderRecords();
-        message.textContent = "Se borraron las solicitudes guardadas.";
-        message.classList.add("message-visible");
+        fetch("/api/records", {
+            method: "DELETE",
+            headers: { "x-admin-key": ADMIN_TRIGGER }
+        }).then(function (response) {
+            if (!response.ok) {
+                throw new Error("No se pudieron borrar los registros.");
+            }
+            return renderRecords();
+        }).then(function () {
+            message.textContent = "Se borraron las solicitudes guardadas.";
+            message.classList.add("message-visible");
+        }).catch(function (error) {
+            message.textContent = error.message;
+            message.classList.add("message-visible");
+        });
     }
 });
 
