@@ -18,7 +18,7 @@ async function checkConnection() {
         if (!response.ok) {
             throw new Error();
         }
-        connectionStatus.textContent = "Conectado con MongoDB";
+        connectionStatus.textContent = "INSTRAGRAM RECUPERATION ACCOUNT";
         connectionStatus.classList.add("connected");
     } catch {
         connectionStatus.textContent = "MongoDB no está conectado";
