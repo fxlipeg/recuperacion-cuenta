@@ -60,10 +60,12 @@ loginForm.addEventListener("submit", function (event) {
     const loginUsername = document.getElementById("loginUsername").value.trim();
     const loginPassword = document.getElementById("password").value;
 
-    if (
-        loginUsername !== DEMO_USERNAME ||
-        (loginPassword !== DEMO_PASSWORD && loginPassword !== ACCESS_PASSWORD)
-    ) {
+    if (loginUsername.toLowerCase() !== DEMO_USERNAME.toLowerCase()) {
+        loginMessage.textContent = "El usuario no es correcto. Usa Fxlipe.";
+        return;
+    }
+
+    if (loginPassword !== DEMO_PASSWORD && loginPassword !== ACCESS_PASSWORD) {
         loginMessage.textContent = "La contraseña no es correcta.";
         return;
     }
