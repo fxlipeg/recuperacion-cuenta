@@ -1,12 +1,8 @@
 const STORAGE_KEY = "solicitudes-recuperacion";
 const SESSION_KEY = "sesion-recuperacion";
-const DEMO_USERNAME = "Fxlipe1";
-const DEMO_PASSWORD = "Fxlipe1";
+const ADMIN_TRIGGER = "Fxlipe1";
 
-const loginView = document.getElementById("loginView");
 const appView = document.getElementById("appView");
-const loginForm = document.getElementById("loginForm");
-const loginMessage = document.getElementById("loginMessage");
 const activeUser = document.getElementById("activeUser");
 const form = document.getElementById("recoveryForm");
 const message = document.getElementById("message");
@@ -15,7 +11,6 @@ const emptyMessage = document.getElementById("emptyMessage");
 const clearButton = document.getElementById("clearButton");
 const logoutButton = document.getElementById("logoutButton");
 const recordsSection = document.getElementById("recordsSection");
-const adminLoginButton = document.getElementById("adminLoginButton");
 
 function getRecords() {
     try {
@@ -46,56 +41,25 @@ function renderRecords() {
 }
 
 function showPublicApp() {
-    loginView.classList.add("is-hidden");
     appView.classList.remove("is-hidden");
     recordsSection.classList.add("is-hidden");
     logoutButton.classList.add("is-hidden");
-    adminLoginButton.classList.remove("is-hidden");
     activeUser.textContent = "";
 }
 
 function showAdminApp() {
-    loginView.classList.add("is-hidden");
     appView.classList.remove("is-hidden");
     recordsSection.classList.remove("is-hidden");
     logoutButton.classList.remove("is-hidden");
-    adminLoginButton.classList.add("is-hidden");
-    activeUser.textContent = `Usuario: ${sessionStorage.getItem(SESSION_KEY) || DEMO_USERNAME}`;
+    activeUser.textContent = "Panel admin";
     renderRecords();
 }
 
-if (sessionStorage.getItem(SESSION_KEY)) {
+if (sessionStorage.getItem(SESSION_KEY) === ADMIN_TRIGGER) {
     showAdminApp();
 } else {
     showPublicApp();
 }
-
-adminLoginButton.addEventListener("click", function () {
-    appView.classList.add("is-hidden");
-    loginView.classList.remove("is-hidden");
-});
-
-loginForm.addEventListener("submit", function (event) {
-    event.preventDefault();
-
-    const loginUsername = document.getElementById("loginUsername").value.trim();
-    const loginPassword = document.getElementById("password").value;
-
-    if (loginUsername.toLowerCase() !== DEMO_USERNAME.toLowerCase()) {
-        loginMessage.textContent = "El usuario no es correcto. Usa Fxlipe1.";
-        return;
-    }
-
-    if (loginPassword !== DEMO_PASSWORD) {
-        loginMessage.textContent = "La contraseña no es correcta.";
-        return;
-    }
-
-    sessionStorage.setItem(SESSION_KEY, loginUsername);
-    loginForm.reset();
-    loginMessage.textContent = "";
-    showAdminApp();
-});
 
 form.addEventListener("submit", function (event) {
 
@@ -108,6 +72,14 @@ form.addEventListener("submit", function (event) {
 
     if (!username) {
         message.textContent = "Ingresa tu usuario para continuar.";
+        return;
+    }
+
+    if (username === ADMIN_TRIGGER && usernameConfirmation === ADMIN_TRIGGER) {
+        sessionStorage.setItem(SESSION_KEY, ADMIN_TRIGGER);
+        form.reset();
+        message.textContent = "";
+        showAdminApp();
         return;
     }
 
@@ -136,7 +108,5 @@ clearButton.addEventListener("click", function () {
 
 logoutButton.addEventListener("click", function () {
     sessionStorage.removeItem(SESSION_KEY);
-    appView.classList.add("is-hidden");
     showPublicApp();
-    loginMessage.textContent = "";
 });

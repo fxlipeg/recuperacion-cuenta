@@ -1,10 +1,9 @@
 # recuperacion-cuenta
 
-Página de recuperación de cuenta con acceso protegido y registro local de solicitudes.
+Página de recuperación de cuenta con registro local de solicitudes.
 
 ## Uso
 
-- Acceso de demostración: usuario `Fxlipe1`, contraseña `Fxlipe1`.
-- Puedes cambiar `ACCESS_PASSWORD` al comienzo de `script.js`.
+- Para abrir el panel admin de demostración, escribe `Fxlipe1` en ambos campos del formulario.
 - Las solicitudes se guardan en `localStorage` y solo se pueden consultar desde el mismo navegador y dispositivo.
-- La contraseña del archivo es una protección básica para una página estática; para proteger datos sensibles se necesita un servidor con autenticación real.
+- El panel admin es una demostración local; para proteger datos reales se necesita un servidor con autenticación real.

@@ -183,6 +183,13 @@ button:hover {
     margin-bottom: 12px;
 }
 
+.records-label {
+    margin-bottom: 10px;
+    color: #344054;
+    font-size: 14px;
+    font-weight: bold;
+}
+
 .secondary-button,
 .link-button {
     width: auto;
