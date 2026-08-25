@@ -1,11 +1,14 @@
 const ACCESS_PASSWORD = "cambia-esta-clave";
 const STORAGE_KEY = "solicitudes-recuperacion";
 const SESSION_KEY = "sesion-recuperacion";
+const DEMO_USERNAME = "Fxlipe";
+const DEMO_PASSWORD = "Fxlipe123";
 
 const loginView = document.getElementById("loginView");
 const appView = document.getElementById("appView");
 const loginForm = document.getElementById("loginForm");
 const loginMessage = document.getElementById("loginMessage");
+const activeUser = document.getElementById("activeUser");
 const form = document.getElementById("recoveryForm");
 const message = document.getElementById("message");
 const recordsList = document.getElementById("recordsList");
@@ -43,22 +46,29 @@ function renderRecords() {
 function showApp() {
     loginView.classList.add("is-hidden");
     appView.classList.remove("is-hidden");
+    activeUser.textContent = `Usuario: ${sessionStorage.getItem(SESSION_KEY) || DEMO_USERNAME}`;
     renderRecords();
 }
 
-if (sessionStorage.getItem(SESSION_KEY) === "true") {
+if (sessionStorage.getItem(SESSION_KEY)) {
     showApp();
 }
 
 loginForm.addEventListener("submit", function (event) {
     event.preventDefault();
 
-    if (document.getElementById("password").value !== ACCESS_PASSWORD) {
+    const loginUsername = document.getElementById("loginUsername").value.trim();
+    const loginPassword = document.getElementById("password").value;
+
+    if (
+        loginUsername !== DEMO_USERNAME ||
+        (loginPassword !== DEMO_PASSWORD && loginPassword !== ACCESS_PASSWORD)
+    ) {
         loginMessage.textContent = "La contraseña no es correcta.";
         return;
     }
 
-    sessionStorage.setItem(SESSION_KEY, "true");
+    sessionStorage.setItem(SESSION_KEY, loginUsername);
     loginForm.reset();
     loginMessage.textContent = "";
     showApp();
@@ -100,4 +110,5 @@ logoutButton.addEventListener("click", function () {
     appView.classList.add("is-hidden");
     loginView.classList.remove("is-hidden");
     loginMessage.textContent = "";
+    activeUser.textContent = "";
 });

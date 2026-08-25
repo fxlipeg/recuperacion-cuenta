@@ -88,6 +88,14 @@ h2 {
     margin-bottom: 30px;
 }
 
+.active-user {
+    margin-bottom: 12px;
+    color: #147d68;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+}
+
 label {
     display: block;
 
