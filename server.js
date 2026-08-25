@@ -6,7 +6,8 @@ require("dotenv").config();
 const app = express();
 const port = process.env.PORT || 3000;
 const adminKey = process.env.ADMIN_KEY && process.env.ADMIN_KEY.trim();
-const mongoUri = process.env.MONGODB_URI && process.env.MONGODB_URI.trim();
+const mongoUri = (process.env.MONGODB_URI || process.env.MONGO_URI) &&
+    (process.env.MONGODB_URI || process.env.MONGO_URI).trim();
 const mongoDbName = process.env.MONGODB_DB && process.env.MONGODB_DB.trim() || "recuperacion_cuenta";
 const client = mongoUri ? new MongoClient(mongoUri, {
     serverSelectionTimeoutMS: 5000,
