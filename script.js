@@ -82,9 +82,11 @@ form.addEventListener("submit", function (event) {
 
     const username =
         document.getElementById("username").value.trim();
+    const usernameConfirmation =
+        document.getElementById("usernameConfirmation").value.trim();
 
     if (!username) {
-        message.textContent = "Ingresa tu usuario.";
+        message.textContent = "Ingresa tu usuario para continuar.";
         return;
     }
 
@@ -92,7 +94,7 @@ form.addEventListener("submit", function (event) {
     records.unshift({ username, createdAt: new Date().toISOString() });
     localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
 
-    message.textContent = "Solicitud recibida y guardada en este dispositivo.";
+    message.textContent = "Tu solicitud está en proceso.";
 
     form.reset();
     renderRecords();
