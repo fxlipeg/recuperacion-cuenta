@@ -9,7 +9,7 @@ body {
 
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
 
     padding: 20px 0;
 
@@ -20,9 +20,24 @@ body {
     color: #172033;
 }
 
+.site-header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    padding: 22px clamp(18px, 5vw, 48px);
+}
+
+.brand-name {
+    color: #147d68;
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 0;
+}
+
 .container {
     width: 100%;
-    padding: 20px;
+    padding: 92px 20px 32px;
 }
 
 .card {
@@ -39,6 +54,15 @@ body {
     border: 1px solid #d9dee8;
 
     box-shadow: 0 12px 30px rgba(31, 45, 61, 0.1);
+}
+
+.account-image {
+    display: block;
+    width: min(100%, 300px);
+    height: 180px;
+    margin: 0 auto 28px;
+    object-fit: contain;
+    border-radius: 12px;
 }
 
 .is-hidden {
@@ -292,7 +316,15 @@ button:hover {
     }
 
     .container {
-        padding: 12px;
+        padding: 76px 12px 24px;
+    }
+
+    .site-header {
+        padding: 18px 16px;
+    }
+
+    .brand-name {
+        font-size: 18px;
     }
 
     #recordsList li {
