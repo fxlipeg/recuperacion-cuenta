@@ -16,12 +16,15 @@ async function checkConnection() {
     try {
         const response = await fetch("/api/status");
         if (!response.ok) {
-            throw new Error();
+            const result = await response.json().catch(function () {
+                return null;
+            });
+            throw new Error(result && result.error || "MongoDB no está conectado");
         }
         connectionStatus.textContent = "INSTRAGRAM RECUPERATION ACCOUNT";
         connectionStatus.classList.add("connected");
-    } catch {
-        connectionStatus.textContent = "MongoDB no está conectado";
+    } catch (error) {
+        connectionStatus.textContent = error.message;
         connectionStatus.classList.add("disconnected");
     }
 }
